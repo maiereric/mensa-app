@@ -12,11 +12,9 @@ def load_data(url):
     df = mensa_get_df(df_raw)
     return df
 
-# Link zur Mensa-Website
-mensa_url = "https://mensa.studiwerk.de/standort/schneidershof"
+mensa_url = "https://mensa.studiwerk.de/standort/schneidershof" # Link zur Mensa-Website
 
-# Supabase Verbindung mit geheimer URL und Key
-supabase_url = st.secrets["SUPABASE_URL"]
+supabase_url = st.secrets["SUPABASE_URL"] # Supabase Verbindung mit geheimer URL und Key
 supabase_key = st.secrets["SUPABASE_KEY"]
 
 # Seitenkonfiguration
@@ -24,8 +22,7 @@ st.set_page_config(page_title="Mensa Speiseplan", page_icon="🍔", layout="wide
 st.title("🍔 Mensa-App")
 
 try:
-    # Supabase Client zur Verbindung zur Datenbank
-    supabase: Client = create_client(supabase_url, supabase_key)
+    supabase: Client = create_client(supabase_url, supabase_key) # Supabase Client zur Verbindung zur Datenbank
     st.toast("Mit Datenbank verbunden", icon="✅")
 
 except Exception as e:
@@ -77,7 +74,6 @@ with tab1:
 
     platz = 1
 
-    # 2. Schleife durch die Top 10 Gerichte
     for index, row in top10_df.iterrows(): # Iteration über die Dataframe-Elemente nach Index und Verarbeitung der Daten in der Zeile "row"
 
         col1, col2 = st.columns([1, 3]) # Zweispaltige Ansicht im Verhältnis 1:3
@@ -104,7 +100,6 @@ with tab2:
 
     platz = 1
 
-    # 2. Schleife durch die Flop 10 Gerichte
     for index, row in flop10_df.iterrows():
 
         col1, col2 = st.columns([1, 3])
@@ -123,7 +118,7 @@ with tab2:
         platz += 1
 
 with tab3:
-    df_meistgekocht = df_mensa['Gericht'].value_counts().head(10).reset_index()
+    df_meistgekocht = df_mensa['Gericht'].value_counts().head(10).reset_index() # Gibt die ersten 10 Gerichte sortiert nach Häufigkeit im Dataframe an
     df_meistgekocht.columns = ['Gericht', 'Anzahl'] # Spalten benennen
     df_meistgekocht = df_meistgekocht.sort_values('Anzahl', ascending=True) # Sortierung
 
